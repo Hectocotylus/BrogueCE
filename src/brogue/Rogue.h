@@ -1695,7 +1695,7 @@ enum dungeonFeatureTypes {
 
     // when triggered, the door seals and caustic gas fills the room
     DF_SHOW_POISON_GAS_VENT,
-    DF_POISON_GAS_VENT_OPEN,
+    DF_SHOW_POISON_GAS_VENT_SILENTLY,
     DF_ACTIVATE_PORTCULLIS,
     DF_OPEN_PORTCULLIS,
     DF_VENT_SPEW_POISON_GAS,
