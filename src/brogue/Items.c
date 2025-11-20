@@ -59,6 +59,7 @@ item *initializeItem() {
     theItem->lastUsed[0] = 0;
     theItem->lastUsed[1] = 0;
     theItem->lastUsed[2] = 0;
+	theItem->xpxp = 0;
     theItem->nextItem = NULL;
 
     for (i=0; i < KEY_ID_MAXIMUM; i++) {
