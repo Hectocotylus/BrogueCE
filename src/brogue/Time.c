@@ -1064,8 +1064,6 @@ static void playerFalls() {
     rogue.flareCount = 0;
 }
 
-
-
 void activateMachine(short machineNumber) {
     short i, j, x, y, layer, sRows[DROWS], sCols[DCOLS], monsterCount, maxMonsters;
 
