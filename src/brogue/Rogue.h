@@ -1700,7 +1700,7 @@ enum dungeonFeatureTypes {
     DF_POISON_GAS_VENT_OPEN,
     DF_ACTIVATE_PORTCULLIS,
     DF_OPEN_PORTCULLIS,
-    DF_VENT_SPEW_POISON_GAS,
+    DF_POISON_GAS_VENT_BURST,
 
     // when triggered, pilot light ignites and explosive gas fills the room
     DF_SHOW_METHANE_VENT,
