@@ -702,7 +702,6 @@ void startLevel(short oldLevelNumber, short stairDirection) {
 
         pos upStairLocation;
         int failsafe;
-        item *nextItem;
         for (failsafe = 50; failsafe; failsafe--) {
             digDungeon();
             if (placeStairs(&upStairLocation)) {
@@ -713,10 +712,7 @@ void startLevel(short oldLevelNumber, short stairDirection) {
             // so they don't carry over into the next one.
             freeCreatureList(monsters);
             freeCreatureList(dormantMonsters);
-            for (theItem = floorItems->nextItem; theItem != NULL; theItem = nextItem) {
-                nextItem = theItem->nextItem;
-                deleteItem(theItem);
-            }
+            deleteItemList(floorItems->nextItem);
             floorItems->nextItem = NULL;
         }
         if (!failsafe) {
@@ -1017,7 +1013,6 @@ void removeDeadMonsters() {
 
 void freeEverything() {
     short i;
-    item *theItem, *theItem2;
 
 #ifdef AUDIT_RNG
     fclose(RNGLogFile);
@@ -1033,10 +1028,7 @@ void freeEverything() {
         freeCreatureList(&levels[i].monsters);
         freeCreatureList(&levels[i].dormantMonsters);
 
-        for (theItem = levels[i].items; theItem != NULL; theItem = theItem2) {
-            theItem2 = theItem->nextItem;
-            deleteItem(theItem);
-        }
+        deleteItemList(levels[i].items);
         levels[i].items = NULL;
         if (levels[i].scentMap) {
             freeGrid(levels[i].scentMap);
@@ -1046,20 +1038,11 @@ void freeEverything() {
     scentMap = NULL;
     freeCreatureList(&purgatory);
 
-    for (theItem = floorItems; theItem != NULL; theItem = theItem2) {
-        theItem2 = theItem->nextItem;
-        deleteItem(theItem);
-    }
+    deleteItemList(floorItems);
     floorItems = NULL;
-    for (theItem = packItems; theItem != NULL; theItem = theItem2) {
-        theItem2 = theItem->nextItem;
-        deleteItem(theItem);
-    }
+    deleteItemList(packItems);
     packItems = NULL;
-    for (theItem = monsterItemsHopper; theItem != NULL; theItem = theItem2) {
-        theItem2 = theItem->nextItem;
-        deleteItem(theItem);
-    }
+    deleteItemList(monsterItemsHopper);
     monsterItemsHopper = NULL;
     for (i=0; i<MAX_WAYPOINT_COUNT; i++) {
         freeGrid(rogue.wpDistance[i]);
