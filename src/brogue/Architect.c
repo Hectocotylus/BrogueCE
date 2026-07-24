@@ -3515,7 +3515,11 @@ void restoreMonster(creature *monst, short **mapToStairs, short **mapToPit) {
         }
 
         pmap[*x][*y].flags &= ~HAS_MONSTER;
-        if (theMap) {
+        // Only simulate monster movement if its cell is reachable from the stairs.
+	// Otherwise, if the monster is standing on a blocker like a trap, its cell
+	// has the default value 30000, which blows up turnCount and walks the monster
+	// all the way to the stairs
+        if (theMap && theMap[monst->loc.x][monst->loc.y] < 30000) {
             // STATUS_ENTERS_LEVEL_IN accounts for monster speed; convert back to map distance and subtract from distance to stairs
             turnCount = (theMap[monst->loc.x][monst->loc.y] - (monst->status[STATUS_ENTERS_LEVEL_IN] * 100 / monst->movementSpeed));
             for (i=0; i < turnCount; i++) {
