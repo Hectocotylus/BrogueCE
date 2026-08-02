@@ -926,6 +926,36 @@ static void handleHealthAlerts() {
     restoreRNG;
 }
 
+static void addXPXPToItem(item *theItem) {
+
+	if (theItem->flags & ITEM_MAGIC_DETECTED) {
+		return;
+	}
+
+	theItem->xpxp += rogue.xpxpThisTurn;
+
+	if (theItem->xpxp >= XPXP_NEEDED_FOR_MAGIC_DETECTED) {
+
+		theItem->flags |= ITEM_MAGIC_DETECTED;
+
+		char theItemName[100], buf[200];
+		char *theItemPolarity;
+		int polarity = itemMagicPolarity(theItem);
+
+		if (polarity == 0) {
+			theItemPolarity = "is not magical";
+		} else if (polarity == 1) {
+			theItemPolarity = "has an aura of benevolent magic";
+		} else {
+			theItemPolarity = "has an aura of malevolent magic";
+		}
+
+		itemName(theItem, theItemName, false, false, &advancementMessageColor);
+		sprintf(buf, "you have noticed that your %s %s.", theItemName, theItemPolarity);
+        messageWithColor(buf, &advancementMessageColor, 0);
+	}
+}
+
 /// @brief Add experience to the given monster. Allies gain experience when the player discovers new pathable tiles.
 /// @param monst The ally that gains experience
 static void addXPXPToAlly(creature *monst) {
@@ -971,6 +1001,13 @@ static void handleXPXP() {
             addXPXPToAlly(monst);
         }
     }
+	for(item *theItem = packItems->nextItem; theItem != NULL; theItem = theItem->nextItem) {
+		if ((theItem->category & (WEAPON | ARMOR | STAFF | WAND | RING))
+			&& !(theItem->kind == DART || theItem->kind == INCENDIARY_DART || theItem->kind == JAVELIN)) {
+			addXPXPToItem(theItem);
+		}
+	}
+
     rogue.xpxpThisTurn = 0;
 }
 
@@ -1026,8 +1063,6 @@ static void playerFalls() {
     animateFlares(rogue.flares, rogue.flareCount);
     rogue.flareCount = 0;
 }
-
-
 
 void activateMachine(short machineNumber) {
     short i, j, x, y, layer, sRows[DROWS], sCols[DCOLS], monsterCount, maxMonsters;

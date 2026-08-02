@@ -1129,6 +1129,7 @@ enum tileFlags {
 #define MAX_EXP                             100000000L
 
 #define XPXP_NEEDED_FOR_TELEPATHIC_BOND     1400 // XPXP required to enable telepathic awareness with the ally
+#define XPXP_NEEDED_FOR_MAGIC_DETECTED     2400 // XPXP required to reveal the magical polarity of a carried item
 
 #define ROOM_MIN_WIDTH                      4
 #define ROOM_MAX_WIDTH                      20
@@ -1418,6 +1419,7 @@ typedef struct item {
     short originDepth;
     unsigned long spawnTurnNumber;
     unsigned long lastUsed[3];         // Absolute turns last applied
+	short xpxp;
     struct item *nextItem;
 } item;
 
