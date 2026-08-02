@@ -1050,7 +1050,6 @@ enum monsterTypes {
     MK_WINGED_GUARDIAN,
     MK_CHARM_GUARDIAN,
     MK_WARDEN_OF_YENDOR,
-    MK_ELDRITCH_TOTEM,
     MK_MIRRORED_TOTEM,
 
     MK_UNICORN,
@@ -2720,7 +2719,6 @@ enum machineTypes {
     MT_KEY_GUARDIAN_GAUNTLET_ROOM,
     MT_KEY_GUARDIAN_CORRIDOR_ROOM,
     MT_KEY_SACRIFICE_ROOM,
-    MT_KEY_SUMMONING_CIRCLE_ROOM,
     MT_KEY_BECKONING_OBSTACLE_ROOM,
     MT_KEY_WORM_TRAP_AREA,
     MT_KEY_MUD_TRAP_ROOM,
@@ -3208,7 +3206,7 @@ extern "C" {
     creature *dormantMonsterAtLoc(pos p);
     pos perimeterCoords(short n);
     boolean monsterBlinkToPreferenceMap(creature *monst, short **preferenceMap, boolean blinkUphill);
-    boolean monsterSummons(creature *monst, boolean alwaysUse);
+    boolean monsterSummons(creature *monst);
     boolean resurrectAlly(const pos loc);
     void unAlly(creature *monst);
     boolean monsterFleesFrom(creature *monst, creature *defender);
